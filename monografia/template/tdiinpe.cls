@@ -518,7 +518,7 @@ top=3cm,bottom=3cm]{geometry}	% acrescentado por gjfb em 2011-12-06
     \ifdigitalcopy % Se for uma cópia digital
         \clearpage % Use apenas clearpage
     \else % Caso contrário, mantenha o comportamento original
-        \ifthenelse{\equal{\@folhaembranco}{true}{
+        \ifthenelse{\equal{\@folhaembranco}{false}{
 		\if@openright\cleardoublepage\else\clearpage\fi %% faz capitulo começar em folha impar (coloca folha em branco)
 	}{\vspace{\baselsinpe}}
 	\thispagestyle{\estilonum} %% define estilo de num. na pag. das partes 
