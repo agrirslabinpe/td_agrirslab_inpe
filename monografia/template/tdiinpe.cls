@@ -22,6 +22,11 @@
 
 \usepackage{ifpdf} 
 
+%%% Criando uma variável para definir se a cópia é digital ou não %%%
+\newif\ifdigitalcopy
+\digitalcopyfalse % Por padrão, não é uma cópia digital
+
+
 %%% Checa se foi chamado o comando htlatex para gerar documento em html
 \newif\ifHTML
   \ifx\HCode\undefined
@@ -510,7 +515,10 @@ top=3cm,bottom=3cm]{geometry}	% acrescentado por gjfb em 2011-12-06
 	\markboth{}{}
 
 \renewcommand{\chapter}{
-	\ifthenelse{\equal{\@folhaembranco}{true}}{
+    \ifdigitalcopy % Se for uma cópia digital
+        \clearpage % Use apenas clearpage
+    \else % Caso contrário, mantenha o comportamento original
+        \ifthenelse{\equal{\@folhaembranco}{true}{
 		\if@openright\cleardoublepage\else\clearpage\fi %% faz capitulo começar em folha impar (coloca folha em branco)
 	}{\vspace{\baselsinpe}}
 	\thispagestyle{\estilonum} %% define estilo de num. na pag. das partes 
@@ -595,8 +603,12 @@ top=3cm,bottom=3cm]{geometry}	% acrescentado por gjfb em 2011-12-06
 %%%%%%% tira num page de empty pages %%%%%%%%%%
 \let\origdoublepage\cleardoublepage
 \newcommand{\clearemptydoublepage}{%
-  \clearpage
-  {\pagestyle{empty}\origdoublepage}%
+    \ifdigitalcopy % Se for uma cópia digital
+        \clearpage % Use apenas clearpage
+    \else % Caso contrário, mantenha o comportamento original
+        \cleardoublepage
+        {\pagestyle{empty}\origdoublepage}%
+    \fi
 }
 \let\cleardoublepage\clearemptydoublepage
 %se nao ativo, comentar linhas acima e descomentar linhas abaixo
